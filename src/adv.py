@@ -58,17 +58,47 @@ room['outside'].players.append(player1)
 #
 # If the user enters "q", quit the game.
 
-while input != "q":
+key_input = ""
+current_room = ""
+
+while key_input != "q":
+
     for r in room:
         if player1 in room[r].players:
-            print("{}: {}".format(room[r].name, room[r].description))
+            print("\n{}: {}\n".format(room[r].name, room[r].description))
+            current_room = r
 
-    input = input("Enter a direction: ")
+    key_input = input("Enter a direction: ")
+    print("\n")
 
-    # if input == "n":
-    #     room['outside'].players.remove(player1)
-    #     room['outside'].n_to.players.append(player1)
-    #     print("{}: {}".format(
-    #         room['outside'].n_to.name, room['outside'].n_to.description))
+    if key_input == "n":
+        if not hasattr(room[current_room], 'n_to'):
+            print("Can't move north\n")
+        else:
+            room[current_room].players.remove(player1)
+            room[current_room].n_to.players.append(player1)
+            current_room = room[current_room].n_to
 
-    
+    elif key_input == "e":
+        if not hasattr(room[current_room], 'e_to'):
+            print("Can't move east\n")
+        else:
+            room[current_room].players.remove(player1)
+            room[current_room].e_to.players.append(player1)
+            current_room = room[current_room].e_to
+
+    elif key_input == "s":
+        if not hasattr(room[current_room], 's_to'):
+            print("Can't move south\n")
+        else:
+            room[current_room].players.remove(player1)
+            room[current_room].s_to.players.append(player1)
+            current_room = room[current_room].s_to
+
+    elif key_input == "w":
+        if not hasattr(room[current_room], 'w_to'):
+            print("Can't move west\n")
+        else:
+            room[current_room].players.remove(player1)
+            room[current_room].w_to.players.append(player1)
+            current_room = room[current_room].w_to
