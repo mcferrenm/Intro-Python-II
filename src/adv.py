@@ -102,3 +102,5 @@ while key_input != "q":
             room[current_room].players.remove(player1)
             room[current_room].w_to.players.append(player1)
             current_room = room[current_room].w_to
+
+# oops!
