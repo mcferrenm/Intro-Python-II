@@ -1,5 +1,6 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -40,13 +41,13 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
-player1 = Player("Player1")
+player1 = Player("Player1", room['outside'])
 
 room['outside'].players.append(player1)
+room['outside'].items.append(Item("Dagger", "Small blade"))
+room['outside'].items.append(Item("Scroll", "Map To Castle"))
 
-# for key in room['outside'].players:
-#     print("{}".format(key))
-
+room['foyer'].items.append(Item("Jar of Ooze", "Magic?"))
 # Write a loop that:
 #
 # * Prints the current room name
@@ -65,10 +66,14 @@ while key_input != "q":
 
     for r in room:
         if player1 in room[r].players:
-            print("\n{}: {}\n".format(room[r].name, room[r].description))
+            print("{}: {}".format(
+                room[r].name, room[r].description))
+            room[r].print_contents()
+            player1.print_inventory()
             current_room = r
 
-    key_input = input("Enter a direction: ")
+    key_input = input(
+        "Enter a direction [n, e, s, w] or a command [grab <item>]: ")
     print("\n")
 
     if key_input == "n":
@@ -102,5 +107,17 @@ while key_input != "q":
             room[current_room].players.remove(player1)
             room[current_room].w_to.players.append(player1)
             current_room = room[current_room].w_to
+    elif "grab" in key_input:
+        parse = key_input.split()
+        item_to_grab = parse[1]
 
-# oops!
+        found = False
+        for item in room[current_room].items:
+            if item.name == item_to_grab:
+                room[current_room].items.remove(item)
+                player1.grab(item)
+                found = True
+                break
+
+        if not found:
+            input("%s doesn't exist" % (item_to_grab))

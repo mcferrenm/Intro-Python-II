@@ -7,6 +7,12 @@ class Room:
         self.name = name
         self.description = description
         self.players = []
+        self.items = []
+
+    def print_contents(self):
+        print("Items in room:")
+        for i in self.items:
+            print("%s: %s" % (i.name, i.description))
 
     def __str__(self):
         return "%s, %s" % (self.name, self.description)
