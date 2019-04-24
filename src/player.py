@@ -10,6 +10,9 @@ class Player:
 
     def grab(self, item):
         self.itembag.append(item)
+    
+    def drop(self, item):
+        self.itembag.remove(item)
 
     def print_inventory(self):
         print("Inventory:")

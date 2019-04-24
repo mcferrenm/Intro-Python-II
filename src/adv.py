@@ -107,6 +107,7 @@ while key_input != "q":
             room[current_room].players.remove(player1)
             room[current_room].w_to.players.append(player1)
             current_room = room[current_room].w_to
+            
     elif "grab" in key_input:
         parse = key_input.split()
         item_to_grab = parse[1]
@@ -116,6 +117,21 @@ while key_input != "q":
             if item.name == item_to_grab:
                 room[current_room].items.remove(item)
                 player1.grab(item)
+                found = True
+                break
+
+        if not found:
+            input("%s doesn't exist" % (item_to_grab))
+
+    elif "drop" in key_input:
+        parse = key_input.split()
+        item_to_drop = parse[1]
+
+        found = False
+        for item in player1.itembag:
+            if item.name == item_to_drop:
+                player1.drop(item)
+                room[current_room].items.append(item)
                 found = True
                 break
 
